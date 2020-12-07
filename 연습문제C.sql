@@ -43,6 +43,7 @@ where country = 'Australia';
 -- 6. 고객 중 현금한도가 높은 순으로
 -- 5명을 조회하세요
 
+s
 
 
 -- 고객 중 현금한도가 높은 순으로
@@ -102,9 +103,15 @@ where country = 'USA' or country = 'France';
 -- 10287, 10310인 주문의 주문번호 고객번호,
 -- 상태, 선적일자를 조회하세요
 
+select orderNumber, customerNumber, status , shippedDate
+from orders
+where orderNumber in ('10287','10165','10310');
 
 -- 14. 상품 테이블에서 구매가격이 90이상 100이하인 상품의 상품코드, 상품명, 가격을 조회하세요
 
+select productCode, productName,buyPrice
+from products
+where buyPrice between 90 and 100;
 
 -- 15. 주문 테이블에서 요구일자가
 -- 2003년 1월인 주문의 주문번호와
