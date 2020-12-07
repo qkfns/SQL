@@ -221,7 +221,7 @@ on bo.bookid = B.bookid;
 --  21) 도서를 구매하지 않은 고객을 포함하여
 --     고객이름과 주문한 도서의 판매금액을 조회하세요
 select name, saleprice
-from BookMembers inner join BookOrders BO
+from BookMembers left outer join BookOrders BO
 on BookMembers.custid = BO.custid ;
 
 

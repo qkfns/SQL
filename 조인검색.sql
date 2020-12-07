@@ -2,7 +2,11 @@
 -- 다중 테이블을 대상으로 하는 연산
 -- 여러 개의 테이블을 결합해서
 -- 원하는 데이터를 검색하는 것
--- 조인방법 : inner join, outer join, self join
+-- 조인방법
+-- cross join : cartesian product (카테시안 곱)
+-- inner join : 조건에 맞는 값만 가져옴
+-- outer join : 조건에 맞지 않은 값도 가져옴
+-- self join : 자기자신을 대상으로 조인 수행
 
 -- inner join
 -- 각 테이블에 존재하는 동일한 컬럼을 대상으로
@@ -17,7 +21,7 @@
 -- select 컬럼들... from 조인할 테이블들
 -- using (a) (표준)
 
--- a. 두 테이블 결합하기 catesian product
+-- a. 두 테이블 결합하기 cartesian product
 select *
 from sales_orders, sales_products
 where sales_orders.sprdid = sales_products.sprdid;
@@ -76,6 +80,18 @@ on o.custid = BM.custid;
 
 -- 도서를 구매한 고객 + 도서를 구매하지 않은 고객
 
-select
+select orderid, name
+from BookOrders BO right outer join BookMembers BM
+on BO.custid = BM.custid
+
+-- 도서를 구매하지 않은 고객
+select orderid, name
+from BookOrders BO right outer join BookMembers BM
+on BO.custid = BM.custid
+where orderid is null;
 
 -- 주문된 도서 + 주문되지 않은 도서
+
+select bookname, orderid
+from BookOrders BO right outer join Books B
+on BO.bookid = B.bookid;
