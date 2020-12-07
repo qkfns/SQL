@@ -194,3 +194,39 @@ select department_id '부서번호', job_id '직업',sum(salary) '연봉 총 합
 from EMPLOYEES
 group by department_id , job_id
 having department_id is not null;
+
+-- 33. 모든 사원들의 LAST_NAME, 부서 이름 및 부서 번호을 조회하세요
+
+select last_name, D.department_id, department_name
+from EMPLOYEES e join DEPARTMENTS D
+on e.department_id = D.department_id;
+
+-- 34. 부서번호 30의 모든 직업들과 부서명으로 조회하세요 90 부서 또한 포함한다.
+
+select job_id, department_name
+from EMPLOYEES e join DEPARTMENTS D
+on D.department_id = e.department_id
+where D.department_id = 30 or D.department_id =90;
+
+select job_id, department_name
+from EMPLOYEES E join DEPARTMENTS D
+on E.department_id = D.department_id
+where D.department_id in (30,90);
+
+-- 36. 커미션을 버는 모든 사람들의 LAST_NAME,
+-- 부서명, 지역 ID 및 도시 명을 조회하세요
+select last_name,department_name,D.location_id,city
+from EMPLOYEES E inner join DEPARTMENTS D
+on E.department_id = D.department_id
+inner join LOCATIONS L
+on D.location_id = L.location_id
+where commission_pct is not null;
+
+-- 37. 커미션을 버는 사람들 중 옥스포드에 거주하는 사람들의 LAST_NAME, 부서명,지역 ID및
+-- 도시명을 조회하세요
+select last_name, department_name, D.location_id, city
+from EMPLOYEES E join DEPARTMENTS D
+on E.department_id = D.department_id
+join LOCATIONS L
+on D.location_id = L.location_id
+where commission_pct is not null and L.city = 'Oxford';
