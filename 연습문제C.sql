@@ -43,8 +43,6 @@ where country = 'Australia';
 -- 6. 고객 중 현금한도가 높은 순으로
 -- 5명을 조회하세요
 
-select
-from customers
 
 
 -- 고객 중 현금한도가 높은 순으로
@@ -55,30 +53,50 @@ from customers
 -- 7. 직책이 Sales Rep이고
 -- 오피스코드가 1인 직원을 조회하세요
 
+select *
+from employees
+where jobTitle = 'Sales Rep' and officeCode = 1;
 
 -- 8. 직책이 Sales Rep이 아니고,
 -- 오피스코드가 5이상인 직원을 조회하세요
 
+select *
+from employees
+where jobTitle <> 'Sales Rep' and officeCode >= 5;
 
 -- 9. 고객의 성과 이름을 알파벳 순으로 조회하세요
 
+select contactFirstName, contactLastName
+from customers
+order by contactFirstName asc , contactLastName asc;
 
 -- 10. 주문상세orderdetails에서 주문번호, 주문수량, 개별가격, 주문수량*개별가격으로 조회하세요
 
+select orderNumber 주문번호, quantityOrdered 주문수량, priceEach 개별가격 , quantityOrdered*priceEach '주문수량*개별가격'
+from orderdetails;
 
 -- 주문금액이 큰 순서대로 출력한다면?
 
+select orderNumber 주문번호, quantityOrdered 주문수량, priceEach 개별가격 , quantityOrdered*priceEach '주문수량*개별가격'
+from orderdetails
+order by quantityOrdered*priceEach desc;
 
 -- 11. 고객 테이블에서 국가가 USA,
 -- 주는 CA, 현금한도가 100000 이상인
 -- 고객의 성과 이름, 국가, 주, 현금한도를
 -- 조회하세요
 
+select contactFirstName , contactLastName , country, state, creditLimit
+from customers
+where state = 'CA' and creditLimit >= 100000 ;
 
 -- 12. 고객 테이블에서 국가가 USA 또는
 -- France 인 고객의 성과 이름,
 -- 국가를 조회하세요
 
+select contactFirstName , contactLastName , country
+from customers
+where country = 'USA' or country = 'France';
 
 -- 13. 주문 테이블에서 주문 번호가 10165,
 -- 10287, 10310인 주문의 주문번호 고객번호,

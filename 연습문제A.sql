@@ -154,7 +154,7 @@ from BookOrders;
 
 select publisher ,count(bookid)
 from Books
-group by publisher
+group by publisher;
 
 --  14) 출판사별 도서의 총 수량이 2권이상인 출판사 조회하세요
 
@@ -186,21 +186,49 @@ having count(bookid)>=2;
 -- 고객 테이블과 주문테이블을 결합해야 조회 가능
 -- 즉, 외래키 관꼐에 있는 컬럼을 대상으로 결합
 
+select BM.custid, name, saleprice ,address
+from BookOrders bo inner join BookMembers BM
+on bo.custid = BM.custid;
+
 --  15b) 박지성 고객의 주문금액,주소,주문일자를 조회하세요
 
+select saleprice, address, orderdate
+from BookOrders bo inner join BookMembers BM
+on bo.custid = BM.custid
+where name = '박지성';
 
 --  16) 주문한 도서이름,주문금액,주문일자를 조회하세요
 
+select bookname 도서이름 , saleprice 주문금액, orderdate 주문일자
+from BookOrders bo inner join Books B
+on bo.bookid = B.bookid;
 
 --  19) 가격이 20000인 도서를 주문한 고객 이름 조회하세요
 
+select name
+from BookOrders bo inner join BookMembers BM
+on bo.custid = BM.custid
+where saleprice = 20000;
 
 --  20) 주문한 고객이름, 도서이름, 주문일자 출력하세요
 
-
+select name, bookname, orderdate
+from BookOrders bo inner join BookMembers BM
+on bo.custid = BM.custid
+inner join Books B
+on bo.bookid = B.bookid;
 
 --  21) 도서를 구매하지 않은 고객을 포함하여
 --     고객이름과 주문한 도서의 판매금액을 조회하세요
+select name, saleprice
+from BookMembers inner join BookOrders BO
+on BookMembers.custid = BO.custid ;
+
+
+
+
+
+
 
 
 
