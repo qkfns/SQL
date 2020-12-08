@@ -6,7 +6,8 @@
 -- cross join : cartesian product (카테시안 곱)
 -- inner join : 조건에 맞는 값만 가져옴
 -- outer join : 조건에 맞지 않은 값도 가져옴
--- self join : 자기자신을 대상으로 조인 수행
+-- self join : 자기자신을 대상으로 조인 수행 단, 조인시 컬럼명이 동일하기 때문에
+--             컬럼구분을 위해서 반드시 별칭을 사용해야 함
 
 -- inner join
 -- 각 테이블에 존재하는 동일한 컬럼을 대상으로
@@ -95,3 +96,68 @@ where orderid is null;
 select bookname, orderid
 from BookOrders BO right outer join Books B
 on BO.bookid = B.bookid;
+
+-- DML : update
+-- 데이터베이스의 특정 레코드의 값을 변경할때 사용
+-- update 테이블명
+-- set 변경할컬럼명 = 새로운값, ...
+-- where 조건식;
+
+-- 33) 제품테이블에서 제품번호가 p03인 제품명을 통큰파이로 변경하세요
+
+update sales_products
+set sprdname = '통큰파이'
+where sprdid = 'p03';
+
+-- 34) 제품테이블에 있는 모든 제품의 단가를 10% 인상하고 그 결과를 조회하세요
+
+update sales_products
+set sprdprice = sprdprice * 1.1;
+
+select sprdname, sprdprice
+from sales_products;
+
+-- 35) 정소화고객이 주문한 제품의 수량을 5개로 수정하세요
+-- 서브쿼리 사용 방식
+update sales_orders
+set ordstatus = 5
+where scustid = (select scustid
+                 from sales_customers
+                 where scustname = '정소화');
+-- 조인 이용 방식
+update sales_orders so join sales_customers sc
+using (scustid)
+set ordstatus = 7
+where scustname = '정소화';
+
+-- 조회
+select *
+from sales_orders;
+
+
+-- DML : delete
+-- 지정한 레코드를 삭제함
+-- delete from 테이블명
+-- where 조건식
+
+-- 36) 주문일자가 2019-05-22인 주문내역을 삭제하세요
+select *
+from sales_orders;
+
+delete from sales_orders
+where orddate = '2019-05-22';
+
+-- 37) 정소화고객이 주문한 내역을 삭제하세요
+
+delete from sales_orders
+where scustid =
+      (select scustid
+      from sales_customers
+      where scustname = '정소화');
+
+-- 38) 주문 내역을 모두 삭제하세요
+delete from sales_orders;
+
+select * from sales_orders;
+
+rollback;

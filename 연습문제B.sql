@@ -230,3 +230,30 @@ on E.department_id = D.department_id
 join LOCATIONS L
 on D.location_id = L.location_id
 where commission_pct is not null and L.city = 'Oxford';
+
+-- 38. 부서별 사원수를 조회하세요 -- 단, 부서명도 함께 출력합니다
+select department_name 부서명, count (employee_id) 사원수
+from EMPLOYEES E inner join DEPARTMENTS D
+on E.department_id = D.department_id
+group by D.department_name;
+
+-- 39. 부서별 사원수를 조회하세요.단, 부서명도 함께 출력하고 단, 사원수가 0이어도 부서명을 출력합니다
+
+select department_name , count(employee_id) 사원수
+from EMPLOYEES E right join DEPARTMENTS D
+    on E.department_id = D.department_id
+group by department_name
+order by 사원수 desc;
+
+-- 자신의 매니저의 이름과 고용일을 조회하세요
+
+select emp.first_name 사원,mgr.first_name 매니저이름, mgr.hire_date '매니저 입사일'
+from EMPLOYEES mgr join EMPLOYEES emp
+on emp.manager_id = mgr.employee_id;
+
+-- 자신의 매니저보다 먼저 고용된 사원들의 LAST_NAME 및 고용일을 조회하세요.
+
+select emp.last_name 사원,emp.hire_date '사원의 입사일',mgr.last_name 매니저이름, mgr.hire_date '매니저 입사일'
+from EMPLOYEES mgr join EMPLOYEES emp
+on emp.manager_id = mgr.employee_id
+where emp.hire_date < mgr.hire_date;
