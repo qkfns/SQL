@@ -257,3 +257,4 @@ select emp.last_name 사원,emp.hire_date '사원의 입사일',mgr.last_name �
 from EMPLOYEES mgr join EMPLOYEES emp
 on emp.manager_id = mgr.employee_id
 where emp.hire_date < mgr.hire_date;
+
